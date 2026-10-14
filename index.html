@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dr D's Plywood Box</title>
+<style>body{margin:0;background:#f4efe5;color:#302a24;font:18px system-ui}main{max-width:900px;margin:auto;padding:24px}h1{font-size:32px}svg{width:100%;max-height:420px;background:#fff8ec;border-radius:18px}table{width:100%;border-collapse:collapse;background:white}td,th{padding:12px;text-align:left;border-bottom:1px solid #ddd}label{display:inline-block;margin:8px}input{width:75px;padding:10px;font:inherit}button{padding:12px;font:inherit;cursor:pointer}small{display:block;margin:16px 0;line-height:1.6}@media print{button{display:none}}</style>
+<main><h1>Dr D's Simple Plywood Box</h1><p>Open top • Butt joints • Outside dimensions in inches</p>
+<label>Width <input id="w" type="number" value="12" min="1" step=".125"></label><label>Depth <input id="d" type="number" value="14" min="1" step=".125"></label><label>Height <input id="h" type="number" value="6" min="1" step=".125"></label><label>Plywood <input id="t" type="number" value=".5" min=".125" step=".03125"></label>
+<svg viewBox="0 0 700 430" role="img" aria-label="Assembled open-top plywood box"><g stroke="#65482d" stroke-width="2" stroke-linejoin="round">
+<path d="M160 155L380 65L570 155L350 245Z" fill="#715135"/>
+<path d="M160 155L380 65L380 205L160 295Z" fill="#b18c58"/>
+<path d="M380 65L570 155L570 295L380 205Z" fill="#c09a65"/>
+<path d="M160 295L380 205L570 295L350 385Z" fill="#d6b780"/>
+<path d="M160 155L350 245L350 385L160 295Z" fill="#e4c28a"/>
+<path d="M350 245L570 155L570 295L350 385Z" fill="#c9a16b"/>
+<path d="M160 155L380 65L570 155L350 245Z M172 156L380 77L556 155L350 231Z" fill="#f4d9a8" fill-rule="evenodd"/>
+</g><g fill="#302a24" font-family="system-ui" font-size="20"><text id="wl" x="200" y="380">12 in width</text><text id="dl" x="465" y="365">14 in depth</text><text id="hl" x="35" y="245">6 in tall</text></g></svg>
+<p id="inside"></p><table><thead><tr><th>Part</th><th>Quantity</th><th>Cut size (inches)</th></tr></thead><tbody id="cuts"></tbody></table>
+<small>Assembly: glue the four walls together with the shorter front/back panels fitted between the full-depth side panels. Glue the full-size bottom underneath the walls. Clamp square; optional brads hold parts while glue cures. All panels use the selected plywood thickness. Measure actual plywood before cutting; nominal ½-inch plywood may be thinner. Saw kerf and CNC cutter compensation are not included. Illustration is schematic.</small><button onclick="window.print()">Print cut list</button>
+<script>
+const ids=['w','d','h','t'];function update(){const [w,d,h,t]=ids.map(id=>Number(document.getElementById(id).value));let cuts=document.getElementById('cuts');if(![w,d,h,t].every(Number.isFinite)||t<=0||w<=2*t||d<=2*t||h<=t){cuts.innerHTML='<tr><td colspan="3">Enter dimensions larger than the plywood allowances.</td></tr>';document.getElementById('inside').textContent='';return}const f=n=>Number(n.toFixed(4));cuts.innerHTML=[['Bottom',1,w,d],['Sides',2,d,h-t],['Front / back',2,w-2*t,h-t]].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+f(r[2])+' × '+f(r[3])+'</td></tr>').join('');document.getElementById('inside').textContent='Inside space: '+f(w-2*t)+' × '+f(d-2*t)+' × '+f(h-t)+' inches.';['wl','dl','hl'].forEach((id,i)=>document.getElementById(id).textContent=f([w,d,h][i])+' in '+['width','depth','tall'][i])}ids.forEach(id=>document.getElementById(id).addEventListener('input',update));update();
+</script></main></html>
